@@ -116,15 +116,9 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<c:set var="num" value="${ param.num }" />
-					
-				<c:choose>
-					<c:when test="${ count%10==0 }">
-						<c:set var="limit" value="${(count/10)-1}" />
-					</c:when>
-					<c:otherwise>
+			
 						<c:set var="limit" value="${(count/10)}" />
-					</c:otherwise>	
-				</c:choose>	
+				
 				
 					<c:choose>
 					<c:when test="${ (not empty option)&&(not empty kwd) }">
