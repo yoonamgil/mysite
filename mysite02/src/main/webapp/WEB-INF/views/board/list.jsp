@@ -100,7 +100,8 @@
 									<c:if test="${vo.userName eq authUser.name }">
 										<td><a
 											href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}"
-											class="del">삭제</a></td>
+											class="del"><img
+												src='/mysite02/assets/images/reply.png'>삭제</a></td>
 									</c:if>
 								</tr>
 							</c:otherwise>
