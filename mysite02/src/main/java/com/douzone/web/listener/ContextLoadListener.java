@@ -6,7 +6,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 
-@WebListener
+//@WebListener
 public class ContextLoadListener implements ServletContextListener {
 		
 	// 어플리케이션에서 초기화 하는 것 

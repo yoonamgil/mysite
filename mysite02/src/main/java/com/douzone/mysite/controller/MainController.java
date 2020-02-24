@@ -45,6 +45,7 @@ public class MainController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request.setCharacterEncoding("UTF-8");
+		
 		System.out.println("doget called");
 		String actionName=request.getParameter("a");
 		Action action = new MainActionFactory().getAction(actionName);
