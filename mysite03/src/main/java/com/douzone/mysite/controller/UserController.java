@@ -30,6 +30,7 @@ public class UserController {
 	public String join(UserVo vo) {
 		System.out.println(vo);
 		userService.join(vo);
+		System.out.println(vo);
 		return "redirect:/user/joinsuccess";
 	}
 	
@@ -106,10 +107,10 @@ public class UserController {
 		
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public String handleException() {
-			return "error/exception";
-	}
+//	@ExceptionHandler(Exception.class)
+//	public String handleException() {
+//			return "error/exception";
+//	}
 	
 	
 	

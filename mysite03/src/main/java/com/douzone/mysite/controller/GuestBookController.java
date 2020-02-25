@@ -48,9 +48,9 @@ public class GuestBookController {
 		guestBookService.delete(vo);
 		return "redirect:/guestbook/list";
 	}
-	@ExceptionHandler(Exception.class)
-	public String handleException() {
-			return "error/exception";
-	}
+//	@ExceptionHandler(Exception.class)
+//	public String handleException() {
+//			return "error/exception";
+//	}
 	
 }

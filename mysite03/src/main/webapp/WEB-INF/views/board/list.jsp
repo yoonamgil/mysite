@@ -21,13 +21,14 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.servletContext.contextPath }/board?a=search&num=0" method="post">
-					<select name ="option">
-						<option value="false">글쓴이 </option>
+				<form id="search_form"
+					action="${pageContext.servletContext.contextPath }/board/search/0"
+					method="post">
+					<select name="option">
+						<option value="false">글쓴이</option>
 						<option value="true">제목</option>
-					</select>
-					<input type="text" id="kwd" name="kwd" value="${kwd }"> 
-					<input type="submit" value="찾기">
+					</select> <input type="text" id="kwd" name="kwd" value="${kwd }"> <input
+						type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
 					<tr>
@@ -40,8 +41,8 @@
 					</tr>
 
 					<c:set var="count" value="${fn:length(boardlist)}" />
-					<c:set var="st" value="${(param.num)*10}"/>
-				
+					<c:set var="st" value="${num*10}" />
+
 
 
 					<c:forEach items='${boardlist}' var='vo' begin='${st}'
@@ -55,14 +56,13 @@
 									<td>${count-status.index }</td>
 									<c:choose>
 										<c:when test="${vo.depth>0}">
-											<td style="text-align:left ;padding-left: ${ 30 *vo.depth}px"><img
-												src='/mysite02/assets/images/reply.png'> (삭제 된 글입니다.)</td>
+											<td style="text-align:left ;padding-left: ${30 *vo.depth}px"><img
+												src='/mysite03/assets/images/reply.png'> (삭제 된 글입니다.)</td>
 										</c:when>
 
 										<c:otherwise>
 											<td style="text-align:left ;padding-left: ${ 30 *vo.depth}px">
-												(삭제 된 글입니다.)
-											</td>
+												(삭제 된 글입니다.)</td>
 
 										</c:otherwise>
 									</c:choose>
@@ -71,7 +71,7 @@
 									<td></td>
 									<td></td>
 
-									
+
 								</tr>
 							</c:when>
 							<c:otherwise>
@@ -80,7 +80,7 @@
 									<c:choose>
 										<c:when test="${vo.depth>0}">
 											<td style="text-align:left ;padding-left: ${ 30 *vo.depth}px"><img
-												src='/mysite02/assets/images/reply.png'> <a
+												src='/mysite03/assets/images/reply.png'> <a
 												href="${pageContext.servletContext.contextPath }/board?a=viewform&name=${vo.userName }&no=${vo.no}">${vo.title }</a></td>
 										</c:when>
 
@@ -115,33 +115,35 @@
 
 				<!-- pager 추가 -->
 				<div class="pager">
-					<c:set var="num" value="${ param.num }" />
-			
-						<c:set var="limit" value="${(count/10)}" />
-				
-				
+
+
+					<c:set var="limit" value="${(count/10)}" />
+
+
 					<c:choose>
-					<c:when test="${ (not empty option)&&(not empty kwd) }">
-						<c:set var="actionnum" value="search" />
-					</c:when>
-					<c:otherwise>
-						<c:set var="actionnum" value="list" />
-					</c:otherwise>	
-				</c:choose>	
-					
-				
+						<c:when test="${ (not empty option)&&(not empty kwd) }">
+							<c:set var="actionnum" value="search" />
+						</c:when>
+						<c:otherwise>
+							<c:set var="actionnum" value="list" />
+						</c:otherwise>
+					</c:choose>
+
+
 					<ul>
 						<c:choose>
 							<c:when test="${(num-1)>=0 }">
-								<li><a href="${pageContext.request.contextPath}/board?a=${actionnum}&num=${num-1}&kwd=${kwd}&option=${option}">◀</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/board?a=${actionnum}&num=${num-1}&kwd=${kwd}&option=${option}">◀</a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="" style="font-weight:bold; color:#ddd" >◀</a></li>
+								<li><a href="" style="font-weight: bold; color: #ddd">◀</a></li>
 							</c:otherwise>
 						</c:choose>
-						
-						<fmt:parseNumber var='s' integerOnly='true' type='number' value='${(num/5)}'></fmt:parseNumber>
-					
+
+						<fmt:parseNumber var='s' integerOnly='true' type='number'
+							value='${(num/5)}'></fmt:parseNumber>
+
 						<c:forEach begin='${ s*5 }' end='${ (s*5)+4 }' var='k' step='1'>
 
 							<c:choose>
@@ -158,7 +160,7 @@
 									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<li><a href="" style="font-weight:bold; color:#ddd">${k+1}</a></li>
+									<li><a href="" style="font-weight: bold; color: #ddd">${k+1}</a></li>
 								</c:otherwise>
 
 							</c:choose>
@@ -166,15 +168,16 @@
 						</c:forEach>
 						<c:choose>
 							<c:when test="${(num+1)<limit }">
-								
-									<li><a href="${pageContext.request.contextPath}/board?a=${actionnum}&num=${num+1}&kwd=${kwd}&option=${option}">▶</a></li>
-								
+
+								<li><a
+									href="${pageContext.request.contextPath}/board?a=${actionnum}&num=${num+1}&kwd=${kwd}&option=${option}">▶</a></li>
+
 							</c:when>
 							<c:otherwise>
-								<li><a href="" style="font-weight:bold; color:#ddd" >▶</a></li>
+								<li><a href="" style="font-weight: bold; color: #ddd">▶</a></li>
 							</c:otherwise>
 						</c:choose>
-						
+
 					</ul>
 
 

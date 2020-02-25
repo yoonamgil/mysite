@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.exception.BoardRepositoryException;
@@ -15,54 +17,14 @@ import com.douzone.mysite.vo.BoardVo;
 
 @Repository
 public class BoardRepository {
+	@Autowired
+	private SqlSession sqlSession;
+	
 public List<BoardVo> findByBoard() {
-		List<BoardVo> result = new ArrayList<>();
-		Connection conn=null;
-		PreparedStatement stmt=null;
-		ResultSet rs =null;
-		try {
-				
-			conn= getConnection();
-			String sql="select a.title, b.name, a.hit, a.reg_date, a.depth,a.no "
-					+ " from board a, user b where a.user_no=b.no order by a.g_no desc, a.o_no desc";
-			stmt=conn.prepareStatement(sql);
-			
-			
-			rs= stmt.executeQuery();
-			
-			while(rs.next()) {
-				String title= rs.getString(1);
-				String userName= rs.getString(2);
-				int hit=rs.getInt(3);
-				String regDate=rs.getString(4);
-				int depth=rs.getInt(5);
-				Long no=rs.getLong(6);
-				
-				BoardVo vo = new BoardVo();
-				vo.setTitle(title);
-				vo.setUserName(userName);
-				vo.setHit(hit);
-				vo.setRegDate(regDate);
-				vo.setDepth(depth);
-				vo.setNo(no);
-				
-				result.add(vo);
-			}
-				
-		} catch(SQLException e) {
-			throw new BoardRepositoryException(e.getMessage());
-		}finally {
-			try {
-				
-				// 3. 자원 정리
-				if(stmt!=null)
-					stmt.close();
-				if(conn!=null)
-					conn.close();
-			}catch(SQLException e) {	
-			}
-		}
-			return result;
+	
+	List<BoardVo> result = sqlSession.selectList("board.findByBoard");
+	return result;
+		
 	}
 public List<BoardVo> findByBoardTitle(String option) {
 	List<BoardVo> result = new ArrayList<>();

@@ -10,6 +10,6 @@
 	<h1>Not Found(404) - Oooops </h1>
 	<p>
 		죄송합니다 페이지를 찾을수 없습니다
-	 </p>
+	</p>
 </body>
 </html>

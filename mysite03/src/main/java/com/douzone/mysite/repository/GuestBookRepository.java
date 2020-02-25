@@ -1,147 +1,52 @@
 package com.douzone.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.douzone.mysite.exception.GuestBookRepositoryException;
-import com.douzone.mysite.vo.GuestBookVo;
 
+import com.douzone.mysite.vo.GuestBookVo;
 
 @Repository
 public class GuestBookRepository {
-	
-public List<GuestBookVo> findAll() {
-		
-		List<GuestBookVo> result = new ArrayList<>();
-		Connection conn=null;
-		PreparedStatement stmt=null;
-		ResultSet rs =null;
-		try {
-				
-			conn= getConnection();
-			String sql="select no,name,contents,password,date_format(reg_date,'%Y-%m-%d')as reg_date "
-					+ " from guestbook order by no desc";
-			stmt=conn.prepareStatement(sql);
-			rs= stmt.executeQuery();
-			
-			while(rs.next()) {
-				Long no=rs.getLong(1);
-				String name= rs.getString(2);
-				String contents= rs.getString(3);
-				String password=rs.getString(4);
-				String regDate=rs.getString(5);
-				
-				
-				GuestBookVo vo = new GuestBookVo();
-				vo.setNo(no);
-				vo.setName(name);
-				vo.setContents(contents);
-				vo.setPassword(password);
-				vo.setRegDate(regDate);
-				
-				
-	
-				result.add(vo);
-			}
-				
-		} catch(SQLException e) {
-			throw new GuestBookRepositoryException(e.getMessage());
-		}finally {
-			try {
-				
-				// 3. 자원 정리
-				if(stmt!=null)
-					stmt.close();
-				if(conn!=null)
-					conn.close();
-			}catch(SQLException e) {	
-			}
-		}
-			return result;
-	}
-	
-	public Boolean insert(GuestBookVo GuestBookVo) {
-		Boolean result=	null;
-		Connection conn=null;
-		PreparedStatement stmt=null;
-		try {
-			conn= getConnection();
-			
-			String sql="insert into guestbook values(null,?,?,?,now())";
-			stmt=conn.prepareStatement(sql);
-			stmt.setString(1, GuestBookVo.getName());
-			stmt.setString(2, GuestBookVo.getContents());
-			stmt.setString(3, GuestBookVo.getPassword().trim());
+	@Autowired
+	private SqlSession sqlSession;
 
-			int count=stmt.executeUpdate();
-			result = count ==1;	
-			
-		}catch(SQLException e) {
-			throw new GuestBookRepositoryException(e.getMessage());
-		}finally {
-			try {
-				if(stmt!=null)
-					stmt.close();
-				if(conn!=null)
-					conn.close();
-			}catch(SQLException e) {	
-			}
-		}
-			return result ;
-	}
-	
-	public Boolean delete(GuestBookVo GuestBookVo) {
-		Boolean result=	null;
-		Connection conn=null;
-		PreparedStatement stmt=null;
-		try {
-			conn= getConnection();
-			
-			String sql="delete from guestbook where no=?\r\n" + 
-					"and password=?";
-			stmt=conn.prepareStatement(sql);
-			stmt.setLong(1, GuestBookVo.getNo());
-			stmt.setString(2, GuestBookVo.getPassword());
+	public List<GuestBookVo> findAll() {
+		List<GuestBookVo> result = sqlSession.selectList("guestbook.findByAll");
+		return result;
 
-			int count=stmt.executeUpdate();
-			result = count ==1;	
-			
-		}catch(SQLException e) {
-			throw new GuestBookRepositoryException(e.getMessage());
-		}finally {
-			try {
-				if(stmt!=null)
-					stmt.close();
-				if(conn!=null)
-					conn.close();
-			}catch(SQLException e) {	
-			}
-		}
-			return result ;
 	}
-	private Connection getConnection() throws SQLException {
-		Connection conn=null;
-		try {
-			// 1. JDBC Driver(My SQL) 로딩 
-		Class.forName("org.mariadb.jdbc.Driver");
+
+	public int insert(GuestBookVo guestBookVo) {
+		return sqlSession.insert("guestbook.insert", guestBookVo);
+
+	}
+
+	public int delete(GuestBookVo guestBookVo) {
+		return sqlSession.delete("guestbook.delete",guestBookVo);
 		
-		// 2. 연결하기 
-		String url="jdbc:mysql://192.168.1.107:3307/webdb";
-			conn =DriverManager.getConnection(url,"webdb","webdb");
-		}catch (ClassNotFoundException e) {
-			
-			throw new GuestBookRepositoryException("드라이버 로딩 실패"+e);
-		}
-		
-		return conn;
-		
-	}	
 	
+	}
+//
+//	private Connection getConnection() throws SQLException {
+//		Connection conn = null;
+//		try {
+//			// 1. JDBC Driver(My SQL) 로딩
+//			Class.forName("org.mariadb.jdbc.Driver");
+//
+//			// 2. 연결하기
+//			String url = "jdbc:mysql://192.168.1.107:3307/webdb";
+//			conn = DriverManager.getConnection(url, "webdb", "webdb");
+//		} catch (ClassNotFoundException e) {
+//
+//			throw new GuestBookRepositoryException("드라이버 로딩 실패" + e);
+//		}
+//
+//		return conn;
+//
+//	}
+
 }
