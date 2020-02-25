@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.BoardRepositoryException;
 import com.douzone.mysite.vo.BoardVo;
 
 @Repository
@@ -49,7 +50,7 @@ public List<BoardVo> findByBoard() {
 			}
 				
 		} catch(SQLException e) {
-			System.out.println("error"+e);
+			throw new BoardRepositoryException(e.getMessage());
 		}finally {
 			try {
 				
@@ -102,7 +103,7 @@ public List<BoardVo> findByBoardTitle(String option) {
 		}
 			
 	} catch(SQLException e) {
-		System.out.println("error"+e);
+		throw new BoardRepositoryException(e.getMessage());
 	}finally {
 		try {
 			
@@ -153,7 +154,7 @@ public List<BoardVo> findByBoardUserName(String option) {
 		}
 			
 	} catch(SQLException e) {
-		System.out.println("error"+e);
+		throw new BoardRepositoryException(e.getMessage());
 	}finally {
 		try {
 			
@@ -206,7 +207,7 @@ public BoardVo findByContents(Long vno) {
 		}
 			
 	} catch(SQLException e) {
-		System.out.println("error"+e);
+		throw new BoardRepositoryException(e.getMessage());
 	}finally {
 		try {
 			
@@ -268,7 +269,7 @@ public BoardVo findByAll(Long vno) {
 		}
 			
 	} catch(SQLException e) {
-		System.out.println("error"+e);
+		throw new BoardRepositoryException(e.getMessage());
 	}finally {
 		try {
 			
@@ -305,7 +306,7 @@ public int updateHit(Long vo) {
 		count = pstmt.executeUpdate();
 
 	} catch (SQLException e) {
-		System.out.println("error :" + e);
+		throw new BoardRepositoryException(e.getMessage());
 	} finally {
 		// 자원 정리
 		try {
@@ -344,7 +345,7 @@ public int updateContents(BoardVo vo) {
 		count = pstmt.executeUpdate();
 
 	} catch (SQLException e) {
-		System.out.println("error :" + e);
+		throw new BoardRepositoryException(e.getMessage());
 	} finally {
 		// 자원 정리
 		try {
@@ -384,7 +385,7 @@ public int update(BoardVo vo) {
 		count = pstmt.executeUpdate();
 
 	} catch (SQLException e) {
-		System.out.println("error :" + e);
+		throw new BoardRepositoryException(e.getMessage());
 	} finally {
 		// 자원 정리
 		try {
@@ -421,7 +422,7 @@ public int delete(Long vo) {
 		count = pstmt.executeUpdate();
 
 	} catch (SQLException e) {
-		System.out.println("error :" + e);
+		throw new BoardRepositoryException(e.getMessage());
 	} finally {
 		// 자원 정리
 		try {
@@ -460,7 +461,7 @@ public int insert(BoardVo vo) {
 		count = pstmt.executeUpdate();
 
 	} catch (SQLException e) {
-		System.out.println("error :" + e);
+		throw new BoardRepositoryException(e.getMessage());
 	} finally {
 		// 자원 정리
 		try {
@@ -504,7 +505,7 @@ public int insertContents(BoardVo vo) {
 		count = pstmt.executeUpdate();
 
 	} catch (SQLException e) {
-		System.out.println("error :" + e);
+		throw new BoardRepositoryException(e.getMessage());
 	} finally {
 		// 자원 정리
 		try {
@@ -534,8 +535,7 @@ private Connection getConnection() throws SQLException {
 	String url="jdbc:mysql://192.168.1.107:3307/webdb";
 		conn =DriverManager.getConnection(url,"webdb","webdb");
 	}catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
-		System.out.println("드라이버 로딩 실패"+ e);
+		throw new BoardRepositoryException("드라이버 로딩 실패"+e);
 	}
 	
 	return conn;

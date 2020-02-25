@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.GuestBookRepositoryException;
 import com.douzone.mysite.vo.GuestBookVo;
 
 
@@ -51,7 +52,7 @@ public List<GuestBookVo> findAll() {
 			}
 				
 		} catch(SQLException e) {
-			System.out.println("error"+e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		}finally {
 			try {
 				
@@ -83,7 +84,7 @@ public List<GuestBookVo> findAll() {
 			result = count ==1;	
 			
 		}catch(SQLException e) {
-			System.out.println("error"+e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		}finally {
 			try {
 				if(stmt!=null)
@@ -113,7 +114,7 @@ public List<GuestBookVo> findAll() {
 			result = count ==1;	
 			
 		}catch(SQLException e) {
-			System.out.println("error"+e);
+			throw new GuestBookRepositoryException(e.getMessage());
 		}finally {
 			try {
 				if(stmt!=null)
@@ -135,8 +136,8 @@ public List<GuestBookVo> findAll() {
 		String url="jdbc:mysql://192.168.1.107:3307/webdb";
 			conn =DriverManager.getConnection(url,"webdb","webdb");
 		}catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("드라이버 로딩 실패"+ e);
+			
+			throw new GuestBookRepositoryException("드라이버 로딩 실패"+e);
 		}
 		
 		return conn;

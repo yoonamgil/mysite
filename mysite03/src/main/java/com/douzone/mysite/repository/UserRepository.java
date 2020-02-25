@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.UserRepositoryException;
 import com.douzone.mysite.vo.UserVo;
 
 @Repository
@@ -36,7 +37,7 @@ public class UserRepository {
 			count = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("error :" + e);
+			throw new UserRepositoryException(e.getMessage());
 		} finally {
 			// 자원 정리
 			try {
@@ -47,7 +48,7 @@ public class UserRepository {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new UserRepositoryException(e.getMessage());
 			}
 		}
 
@@ -86,7 +87,7 @@ public int update(UserVo vo) {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new UserRepositoryException(e.getMessage());
 			}
 		}
 
@@ -104,7 +105,7 @@ private Connection getConnection() throws SQLException {
 		conn =DriverManager.getConnection(url,"webdb","webdb");
 	}catch (ClassNotFoundException e) {
 		// TODO Auto-generated catch block
-		System.out.println("드라이버 로딩 실패"+ e);
+		throw new UserRepositoryException("드라이버 로딩 실패"+e);
 	}
 	
 	return conn;
@@ -146,7 +147,7 @@ private Connection getConnection() throws SQLException {
 //				userVo.setGender(gender);
 			}
 		} catch (SQLException e) {
-			System.out.println("error :" + e);
+			throw new UserRepositoryException(e.getMessage());
 		} finally {
 			// 자원 정리
 			try {
@@ -160,7 +161,7 @@ private Connection getConnection() throws SQLException {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new UserRepositoryException(e.getMessage());
 			}
 		}		
 		
@@ -199,7 +200,7 @@ private Connection getConnection() throws SQLException {
 				userVo.setGender(gender);
 			}
 		} catch (SQLException e) {
-			System.out.println("error :" + e);
+			throw new UserRepositoryException(e.getMessage());
 		} finally {
 			// 자원 정리
 			try {
@@ -213,7 +214,7 @@ private Connection getConnection() throws SQLException {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new UserRepositoryException(e.getMessage());
 			}
 		}		
 		
