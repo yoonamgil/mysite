@@ -39,14 +39,14 @@
 				<div class="bottom">
 					
 					
-					<a href="${pageContext.request.contextPath}/board?a=list&num=0">글목록</a>
+					<a href="${pageContext.request.contextPath}/board">글목록</a>
 					
-					<c:if test="${viewVo.userName eq authUser.name }">
-					<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${viewVo.no}">글수정</a>
+					<c:if test="${viewVo.userNo eq authUser.no }">
+					<a href="${pageContext.request.contextPath}/board/modify/${viewVo.no}">글수정</a>
 					
 					</c:if>	
 					<c:if test="${not empty authUser }">
-					<a href="${pageContext.request.contextPath}/board?a=writeform&no=${viewVo.no}&truename=truename">답글</a>
+					<a href="${pageContext.request.contextPath}/board/reply/${viewVo.no}">답글</a>
 					</c:if>	
 					
 				</div>

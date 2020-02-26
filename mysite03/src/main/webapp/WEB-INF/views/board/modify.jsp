@@ -16,7 +16,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board?a=update&no=${mvo.no }">
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/modify/${mvo.no}">
 					<table class="tbl-ex">
 						
 						<tr>
@@ -29,12 +29,12 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content" >${mvo.contents }</textarea>
+								<textarea id="content" name="contents" >${mvo.contents }</textarea>
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath }/board?a=list&num=0">취소</a>
+						<a href="${pageContext.servletContext.contextPath }/board">취소</a>
 						<input type="submit" value="수정">
 					</div>
 				</form>				

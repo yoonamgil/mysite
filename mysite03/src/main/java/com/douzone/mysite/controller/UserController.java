@@ -101,6 +101,7 @@ public class UserController {
 			return "redirect:/";
 		}
 		/////////////////////////////////////////////////////////////////////
+			userVo.setNo(authUser.getNo());
 			userService.update(userVo);
 			session.setAttribute("authUser",userVo);
 		return "redirect:/";
