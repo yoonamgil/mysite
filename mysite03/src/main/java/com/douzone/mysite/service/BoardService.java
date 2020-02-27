@@ -69,9 +69,6 @@ public class BoardService {
 		double limit = ((double)count/10.0);
 		
 	
-		System.out.println(page*10);
-		
-		System.out.println(list.size());
 		map.put("boardlist",list);
 		map.put("kwd",kwd);
 		map.put("option",option);

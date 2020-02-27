@@ -1,6 +1,5 @@
 package com.douzone.mysite.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
+import com.douzone.security.Auth;
 
 @Controller
 @RequestMapping("/board")
@@ -46,6 +46,7 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	@Auth
 	@RequestMapping("/delete/{no}")
 	public String delete(@PathVariable(value="no") Long no,HttpSession session
 					   ) {
@@ -53,7 +54,7 @@ public class BoardController {
 		System.out.println(authUser.getNo());
 		BoardVo vo= boardservice.findByContents(no);
 		System.out.println(vo.getUserNo());
-		if((authUser == null) || (authUser.getNo() != vo.getUserNo()) ) {
+		if( (authUser.getNo() != vo.getUserNo()) ) {
 			return "redirect:/";
 		}
 		
@@ -61,6 +62,7 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	@Auth
 	@RequestMapping("/modify/{no}")
 	public String modify(@PathVariable(value="no") Long no,
 						HttpSession session,
@@ -70,7 +72,7 @@ public class BoardController {
 		BoardVo vo= boardservice.findByContents(no);
 		
 		
-		if((authUser == null) || (authUser.getNo() != vo.getUserNo()) ) {
+		if( (authUser.getNo() != vo.getUserNo()) ) {
 			return "redirect:/";
 		}
 		
@@ -79,6 +81,7 @@ public class BoardController {
 		return "board/modify";
 	}
 	
+	@Auth
 	@RequestMapping(value="/modify/{no}", method=RequestMethod.POST )
 	public String modify(@PathVariable(value="no") Long no,
 						 BoardVo vo
@@ -90,29 +93,18 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	@Auth
 	@RequestMapping("/write")
-	public String write(HttpSession session
-					   ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
+	public String write() {
 		return "board/write";
 	}
 	
-	
+	@Auth
 	@RequestMapping(value="/write",method=RequestMethod.POST)
 	public String write(HttpSession session, BoardVo vo , 
 						@RequestParam(value="no", required=true, defaultValue="0")Long no
 					   ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");	
 		if(no== 0) {
 			vo.setUserNo(authUser.getNo());
 			boardservice.insertList(vo);
@@ -128,15 +120,9 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	@Auth
 	@RequestMapping("/reply/{no}")
-	public String reply(@PathVariable(value="no") Long no,
-						HttpSession session
-					   ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
+	public String reply(@PathVariable(value="no") Long no) {
 		return "board/write";
 	}
 	
