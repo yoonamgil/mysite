@@ -83,21 +83,21 @@ public class BoardRepository {
 		
 	}
 
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-		try {
-			// 1. JDBC Driver(My SQL) 로딩
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			// 2. 연결하기
-			String url = "jdbc:mysql://192.168.1.107:3307/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			throw new BoardRepositoryException("드라이버 로딩 실패" + e);
-		}
-
-		return conn;
-
-	}
+//	private Connection getConnection() throws SQLException {
+//		Connection conn = null;
+//		try {
+//			// 1. JDBC Driver(My SQL) 로딩
+//			Class.forName("org.mariadb.jdbc.Driver");
+//
+//			// 2. 연결하기
+//			String url = "jdbc:mysql://192.168.1.107:3307/webdb";
+//			conn = DriverManager.getConnection(url, "webdb", "webdb");
+//		} catch (ClassNotFoundException e) {
+//			throw new BoardRepositoryException("드라이버 로딩 실패" + e);
+//		}
+//
+//		return conn;
+//
+//	}
 
 }
