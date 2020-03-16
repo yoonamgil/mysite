@@ -2,8 +2,6 @@ package com.douzone.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +14,7 @@ import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.security.Auth;
+import com.douzone.security.AuthUser;
 
 @Controller
 @RequestMapping("/board")
@@ -48,12 +47,9 @@ public class BoardController {
 	
 	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete(@PathVariable(value="no") Long no,HttpSession session
+	public String delete(@PathVariable(value="no") Long no,@AuthUser UserVo authUser
 					   ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		System.out.println(authUser.getNo());
 		BoardVo vo= boardservice.findByContents(no);
-		System.out.println(vo.getUserNo());
 		if( (authUser.getNo() != vo.getUserNo()) ) {
 			return "redirect:/";
 		}
@@ -65,17 +61,15 @@ public class BoardController {
 	@Auth
 	@RequestMapping("/modify/{no}")
 	public String modify(@PathVariable(value="no") Long no,
-						HttpSession session,
+						@AuthUser UserVo authUser,
 						Model model
 					   ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
 		BoardVo vo= boardservice.findByContents(no);
-		
-		
 		if( (authUser.getNo() != vo.getUserNo()) ) {
 			return "redirect:/";
 		}
-		
+
 		model.addAttribute("mvo", vo);
 		
 		return "board/modify";
@@ -88,8 +82,6 @@ public class BoardController {
 					   ) {
 		vo.setNo(no);
 		boardservice.updateContests(vo);
-		
-		
 		return "redirect:/board";
 	}
 	
@@ -101,10 +93,9 @@ public class BoardController {
 	
 	@Auth
 	@RequestMapping(value="/write",method=RequestMethod.POST)
-	public String write(HttpSession session, BoardVo vo , 
+	public String write(@AuthUser UserVo authUser, BoardVo vo , 
 						@RequestParam(value="no", required=true, defaultValue="0")Long no
 					   ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");	
 		if(no== 0) {
 			vo.setUserNo(authUser.getNo());
 			boardservice.insertList(vo);
@@ -116,7 +107,6 @@ public class BoardController {
 			boardservice.update(newVo);
 			boardservice.insertContents(newVo);
 		}
-		
 		return "redirect:/board";
 	}
 	
@@ -125,9 +115,6 @@ public class BoardController {
 	public String reply(@PathVariable(value="no") Long no) {
 		return "board/write";
 	}
-	
-	
-	
 	
 	
 }
