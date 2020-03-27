@@ -10,8 +10,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@Configuration
-@PropertySource("classpath:com/douzone/mysite/config/web/properties/fileupload.properties")
+//@Configuration
+//@PropertySource("classpath:com/douzone/mysite/config/web/properties/fileupload.properties")
 public class FileUploadConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
