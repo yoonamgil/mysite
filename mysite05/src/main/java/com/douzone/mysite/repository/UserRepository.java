@@ -49,6 +49,11 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByNo", authUserNo);
 
 	}
+
+	public UserVo find(String email) {
+		
+		return sqlSession.selectOne("user.findByEmail", email);
+	}
 	
 // private Connection getConnection() throws SQLException {
 //	Connection conn=null;
