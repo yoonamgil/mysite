@@ -218,8 +218,8 @@
 				<configuration>
 					<url>http://192.168.1.15:8080/manager/text</url>
 					<path>/mysite03</path>
-					<username>gitbook</username>
-					<password>gitbook</password>
+					<username>webdb</username>
+					<password>webdb</password>
 				</configuration>
 			</plugin>
 
