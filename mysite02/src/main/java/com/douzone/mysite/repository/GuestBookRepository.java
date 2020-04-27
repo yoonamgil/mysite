@@ -130,7 +130,7 @@ public List<GuestBookVo> findAll() {
 		Class.forName("org.mariadb.jdbc.Driver");
 		
 		// 2. 연결하기 
-		String url="jdbc:mysql://192.168.1.107:3307/webdb";
+		String url="jdbc:mysql://192.168.1.15:3306/webdb";
 			conn =DriverManager.getConnection(url,"webdb","webdb");
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
