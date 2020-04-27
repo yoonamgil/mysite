@@ -23,7 +23,7 @@ public List<GuestBookVo> findAll() {
 		try {
 				
 			conn= getConnection();
-			String sql="select no,name,contents,password,date_format(reg_date,'%Y-%m-%d')as reg_date "
+			String sql="select no,name,contents,password,date_format(reg_date,'%Y-%m-%d')as ng_date "
 					+ " from guestbook order by no desc";
 			stmt=conn.prepareStatement(sql);
 			rs= stmt.executeQuery();
