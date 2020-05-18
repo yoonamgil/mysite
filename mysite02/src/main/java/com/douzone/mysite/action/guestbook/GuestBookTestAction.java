@@ -23,7 +23,7 @@ public class GuestBookTestAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		File tempdir = new File("/var/www/git/test02" + ".git");
+		File tempdir = new File("/var/www/git/test03" + ".git");
 
 		 String command = "sudo chown -R apache.apache /var/www/git/test02.git";  
 		
