@@ -21,7 +21,7 @@
 					<h2>안녕하세요. 유남길의  mysite에 오신 것을 환영합니다.</h2>
 					<form action="${ pageContext.request.contextPath }/guestbook" method="get">
 						<input type="hidden" name="a" value="test">
-						<input type="submit" ></input>s
+						<input type="submit" ></input>
 					</form>
 					<p>
 						
