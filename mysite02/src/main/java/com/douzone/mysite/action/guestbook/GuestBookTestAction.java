@@ -20,7 +20,7 @@ public class GuestBookTestAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		File tempdir = new File(" " + ".git");
+		File tempdir = new File("/var/www/git/test02" + ".git");
 
 
 
