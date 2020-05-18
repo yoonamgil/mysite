@@ -26,6 +26,12 @@
 						<a href="${ pageContext.request.contextPath }/guestbook?a=list">방명록</a>에 글 남기기<br>
 					</p>
 				</div>
+				<div>
+					<form action="${ pageContext.request.contextPath }/guestbook" method="get">
+						<input type="hidden" name="a" value="test">
+						<input type="submit" ></input>
+					</form>
+				</div>
 			</div>
 		</div>
 

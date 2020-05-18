@@ -16,6 +16,7 @@ public class GuestBookActionFactory extends ActionFactory {
 		case "insert" : return new GuestBookInsertAction(); 
 		case "delete" : return new GuestBookDeleteAction(); 
 		case "list" : return new GuestBookListAction();
+		case "test" : return new GuestBookTestAction();
 
 		default : return new MainAction();
 	}
